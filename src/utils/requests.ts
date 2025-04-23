@@ -1,10 +1,14 @@
 import axios from "axios"
 import { message } from "antd"
+const baseURL=import.meta.env.VITE_BASE_URL
 const instance=axios.create({
-    baseURL:'',
+    baseURL:baseURL,
     timeout:3000,
     timeoutErrorMessage:'请求超时',
     withCredentials:true,
+    headers:{
+        Authorization: 'Bearer ' + localStorage.getItem('token') || ''
+    }
 })
 instance.interceptors.request.use((config)=>{
     return config
