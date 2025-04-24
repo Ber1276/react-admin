@@ -61,8 +61,8 @@ const SiderMenu = () => {
                 items={items}
                 style={{
                     height: '100%',
-                    borderRight: 0,
-                    overflow:'hidden'
+                    backgroundColor: 'var(--dark-home-bg-color)',
+                    color:'var(--dark-color)'
                 }}
             />
         </div>

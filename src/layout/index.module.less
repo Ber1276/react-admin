@@ -1,9 +1,23 @@
 .content {
     background-color: var(--dark-home-bg-color);
-    height: calc(100vh - 70px);
+    height: max-content;
     padding: 20px;
-    overflow: auto; 
+    overflow: hidden; 
 }
-.wrapper {
-    min-height: calc(100vh - 70px);
+.footer {
+    text-align: center;
+    line-height: 30px;
+    background-color: var(--dark-home-bg-color);
+
+    color: var(--dark-color);
+    font-size: 14px;
+    :global(a) {
+        color: #b0aeae;
+        &:hover {
+            color: #1677ff;
+        }
+    }
+    :global(.gutter) {
+        margin: 0 10px;
+    }
 }

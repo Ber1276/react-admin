@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { Outlet } from 'react-router';
 import styles from './index.module.less';
 import { Layout } from 'antd';
-const { Sider } = Layout;
-import Footer from './footer/index';
+const { Sider, Footer,Content } = Layout;
 import NavHeader from './header/index';
 import SiderMenu from './menu/index';
 import { useStore } from '../store/index';
@@ -21,17 +20,23 @@ const LayoutContainer: React.FC = () => {
     };
     // 权限判断
     return (
-        <Layout>
-            <Sider collapsed={collapsed}>
+        <Layout style={{height:'100vh'}}>
+            <Sider collapsed={collapsed} style={{height:'100vh'}}>
                 <SiderMenu />
             </Sider>
             <Layout>
                 <NavHeader />
-                {/* <TabsFC /> */}
-                <div className={styles.content}>
+                <Content className={styles.content}>
                     <Outlet></Outlet>
-                </div>
-                <Footer />
+                </Content>
+                <Footer className={styles.footer}>
+                    <div >
+                        <div>
+                            <a>管理平台</a>
+                        </div>
+                        <div>Copyright All Rights Reserved.</div>
+                    </div>
+                </Footer>
             </Layout>
         </Layout>
     );
