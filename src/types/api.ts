@@ -74,6 +74,16 @@ export interface ICreateMenuParams {
     component: string; // 组件名称
     menuStatus: number; // 菜单状态 1:启用 2:禁用
 }
+export interface IMenuEditParams {
+    _id: string;
+    icon: string;
+    menuName: string;
+    menuState: number;//1：正常 2 停用
+    menuType: number;//1 菜单 2按钮 3 页面
+    orderBy: number;
+    parentId: string;
+    path: string;
+}
 // 更新菜单参数
 export interface IUpdateMenuParams extends ICreateMenuParams {
     _id: string;
@@ -160,4 +170,28 @@ export interface ICreateUserParams {
 // 更新用户参数
 export interface IUpdateUserParams extends ICreateUserParams {
     userId: string;
+}
+
+//dahsboard
+export interface IReportData{
+     codeline:number,
+     salary:number,
+     icafecount:number,
+     projectNum:number
+}
+export interface ILineData{
+    label:string[],
+    order:number[],
+    money:number[]
+}
+export interface IPieData{
+    value:number,
+    name:string
+}
+export interface IRadarData{
+    indicator:Array<{name:string,max:number}>
+    data:{
+        value:number[]
+        name:string
+    }
 }

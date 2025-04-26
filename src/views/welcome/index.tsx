@@ -1,15 +1,14 @@
-
-import styles from "./index.module.less"
-export default function Welcome() {
-
+import styles from './index.module.less';
+export default function Login() {
+   
     return (
-        <>
-            <div className={styles.welcome}>
-                <div className={styles.subtitle}>欢迎使用</div>
-                <div className={styles.title}>管理平台</div>
-                <div className={styles.desc}>react19+zustand+antd+typescript</div>
-                <div className={styles.img}></div>
+        <div className={styles.welcome}>
+            <div className={styles.content}>
+                <div className={styles.subTitle}>bai1276</div>
+                <div className={styles.title}>React18/19系统</div>
+                <div className={styles.desc}>React18/19+TypeScript+Vite实现通用后台</div>
             </div>
-        </>
-    )
+            <div className={styles.img}></div>
+        </div>
+    );
 }
