@@ -9,6 +9,7 @@ import { useStore } from '../store/index';
 import api from '../api';
 import { searchRoute } from '../utils';
 import {router} from '../router';
+import { IUserItem } from '../types/api';
 const LayoutContainer: React.FC = () => {
     const { collapsed, updateUserInfo } = useStore();
 
@@ -17,7 +18,7 @@ const LayoutContainer: React.FC = () => {
         getUserInfo();
     }, []);
     const getUserInfo = async () => {
-        const data = await api.getUserInfo();
+        const data = await api.getUserInfo() as unknown as IUserItem;
         updateUserInfo(data); 
     };
     // 权限判断 
@@ -35,12 +36,12 @@ const LayoutContainer: React.FC = () => {
     }
     return (
         
-        <Layout style={{height:'100vh',width:'100vw'}}>
-            <Sider collapsed={collapsed} style={{height:'100vh'}}>
+        <Layout>
+            <Sider collapsed={collapsed} >
                 <SiderMenu />
             </Sider>
             <Watermark content="bai1276">
-            <Layout>
+            <Layout style={{height:'100vh',width: collapsed ? 'calc(100vw - 80px)' : 'calc(100vw - 200px)'}}>
                 <NavHeader />
                 <Content className={styles.content}>
                     <Outlet></Outlet>

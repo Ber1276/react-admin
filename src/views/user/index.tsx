@@ -7,8 +7,6 @@ import CreateUser from './CreateUser';
 import { useAntdTable } from 'ahooks';
 import AuthButton from '../../components/AuthButton';
 import { IUser, IUserSearchParams } from '../../types/api';
-// import AuthButton from '@/components/AuthButton';
-// import SearchForm from '@/components/SearchForm';
 export default function UserList() {
     const [form] = Form.useForm();
     const [userIds, setUserIds] = useState<number[]>([]);

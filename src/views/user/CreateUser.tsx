@@ -26,13 +26,13 @@ const CreateUser = (props: IProps) => {
 
     // 获取部门列表
     const getDeptList = async () => {
-        const list = await api.getDeptList();
+        const list = await api.getDeptList() as unknown as IDeptItem[];
         setDeptList(list);
     };
 
     // 获取角色列表
     const getRoleList = async () => {
-        const list = await roleApi.getAllRoleList();
+        const list = await roleApi.getAllRoleList() as unknown as IRole[];
         setRoleList(list);
     };
 

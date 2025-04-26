@@ -46,8 +46,8 @@ export default {
     },
 
     // 获取用户列表
-    getUserList(params: IUserSearchParams) {
-        return request.get('/users/list', params);
+    getUserList(params: IUserSearchParams): Promise<{page:any,list:any}> {
+        return request.get('/users/list', params).then(response => response as any);
     },
     // 创建用户
     createUser(params: ICreateUserParams) {

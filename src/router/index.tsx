@@ -3,15 +3,11 @@ import Welcome from "../views/welcome";
 import Login from "../views/login";
 import LayoutCon from "../layout/index";
 import { Navigate } from "react-router";
-import DashBoard from "../views/dashboard";
-import UserList from "../views/user";
-import RoleList from "../views/role";
-import MenuList from "../views/menu";
-import DeptList from "../views/dept";
 import Error404 from "../views/404";
 import Error403 from "../views/403";
 import authLoader from "./authloader";
-
+import {lazy} from "react";
+import { lazyLoad } from "./lazy";
 export const router = [
     {
         element: <LayoutCon />,
@@ -24,23 +20,23 @@ export const router = [
             },
             {
                 path: '/dashboard',
-                element: <DashBoard />,
+                element: lazyLoad(lazy(() => import("../views/dashboard"))),
             },
             {
                 path: '/userList',
-                element: <UserList />,
+                element: lazyLoad(lazy(() => import("../views/user"))),
             },
             {
                 path: '/roleList',
-                element: <RoleList />,
+                element: lazyLoad(lazy(() => import("../views/role"))),
             },
             {
                 path: '/menuList',
-                element: <MenuList />,
+                element: lazyLoad(lazy(() => import("../views/menu"))),
             },
             {
                 path: '/deptList',
-                element: <DeptList />,
+                element: lazyLoad(lazy(() => import("../views/dept"))),
                 meta: {
                     requireAuth: true, // 表示需要登录才能访问
                 }

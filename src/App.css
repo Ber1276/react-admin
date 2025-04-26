@@ -2,8 +2,3 @@ html, body {
     padding: 0;
     margin: 0;
 }
-.ant-layout {
-    display: flex!important;
-    width: 100vw!important;
-    min-height: 100%!important;
-}

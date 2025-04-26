@@ -73,7 +73,7 @@ const RoleList: React.FC = () => {
     { 
       title: '操作',
       key: 'action',
-      render: (_, record: IRole) => (
+      render: (_:any, record: IRole) => (
         <> 
           <Button onClick={() => handleEdit(record)}>编辑</Button>
           <Button onClick={() => handleDelete(record._id)} danger>删除</Button>

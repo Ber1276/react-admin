@@ -14,18 +14,30 @@ import { useNavigate, useRouteLoaderData } from 'react-router';
 import { useStore } from '../../store';
 import { IMenu } from '../../types/api';
 type MenuItem = Required<MenuProps>['items'][number];
-const iconMap={
-    HomeOutlined,
-    MailOutlined,
-    UsergroupDeleteOutlined,
-    UserOutlined,
-    SolutionOutlined,
-    LaptopOutlined,
-}
-const getIcon=(iconName:string)=>{
-    const IconComponent=iconMap[iconName]
-    return IconComponent ? <IconComponent /> : null;
-}
+
+
+type IconMapType = {
+  HomeOutlined: typeof HomeOutlined;
+  MailOutlined: typeof MailOutlined;
+  UsergroupDeleteOutlined: typeof UsergroupDeleteOutlined;
+  UserOutlined: typeof UserOutlined;
+  SolutionOutlined: typeof SolutionOutlined;
+  LaptopOutlined: typeof LaptopOutlined;
+};
+
+const iconMap: IconMapType = {
+  HomeOutlined,
+  MailOutlined,
+  UsergroupDeleteOutlined,
+  UserOutlined,
+  SolutionOutlined,
+  LaptopOutlined,
+};
+
+const getIcon = (iconName: keyof IconMapType) => {
+  const IconComponent = iconMap[iconName];
+  return IconComponent ? <IconComponent /> : null;
+};
 
 
 const SiderMenu = () => {
