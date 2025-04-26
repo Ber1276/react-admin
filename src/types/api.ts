@@ -72,7 +72,7 @@ export interface ICreateMenuParams {
     menuCode: string; // 菜单权限标示
     parentId: string; // 父级菜单id
     component: string; // 组件名称
-    menuStatus: number; // 菜单状态 1:启用 2:禁用
+    menuState: number; // 菜单状态 1:启用 2:禁用
 }
 export interface IMenuEditParams {
     _id: string;

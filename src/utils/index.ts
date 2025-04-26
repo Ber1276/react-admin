@@ -1,3 +1,6 @@
+
+import { IMenu } from "../types/api";
+
 // 格式化日期
 export const formatDate = (date?: Date | string, rule?: string) => {
     let curDate = new Date();
@@ -45,4 +48,33 @@ export function formatDateToChinese(dateString: string): string {
             .toString()
             .padStart(2, '0')}秒`
     );
+}
+
+export function getMenuPath(list:IMenu[]):string[] {
+    return list.reduce((res:string[],item:IMenu)=>{
+        return res.concat(Array.isArray(item.children)&&!item.buttons ? getMenuPath(item.children) : item.path+'')
+    },[])
+}
+
+export const searchRoute:any=(path:string,routes:any[])=>{
+    for (const item of routes) {
+        if(item.path===path) return item
+        if(item.children) {
+            const res=searchRoute(path,item.children)
+            if(res) return res
+        }
+    }
+}
+export const findTreeNode=(tree:IMenu[],pathname:string,path:string[]):string[] =>{
+    if(!tree) return []
+    for (const item of tree) {
+        path.push(item.menuName)
+        if(item.path===pathname) return path
+        if(item.children?.length) {
+            const list=findTreeNode(item.children,pathname,path)
+            if(list.length) return list
+        }
+        path.pop()
+    }
+    return []
 }

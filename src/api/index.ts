@@ -17,6 +17,9 @@ export default {
     getUserInfo() {
         return request.get('/users/getUserInfo');
     },
+    getPermissionList() {
+        return request.get('/users/getPermissionList');
+    },
 
     // 部门管理模块
     getDeptList(params?: IDeptSearchParam) {

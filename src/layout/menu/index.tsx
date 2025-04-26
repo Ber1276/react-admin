@@ -1,4 +1,4 @@
-import  { useState } from 'react';
+import  { useEffect, useState } from 'react';
 import {
     HomeOutlined,
     MailOutlined,
@@ -10,27 +10,23 @@ import {
 import type { MenuProps } from 'antd';
 import { Menu } from 'antd';
 import styles from './index.module.less';
-import { useNavigate } from 'react-router';
+import { useNavigate, useRouteLoaderData } from 'react-router';
 import { useStore } from '../../store';
+import { IMenu } from '../../types/api';
 type MenuItem = Required<MenuProps>['items'][number];
-const items: MenuItem[] = [
-    {
-        key: '/dashboard',
-        icon: <HomeOutlined />,
-        label: 'Dashboard',
-    },
-    {
-        key: '/user',
-        label: '用户模块',
-        icon: <UsergroupDeleteOutlined />,
-        children: [
-            { key: '/userList', label: '用户列表', icon: <UserOutlined /> },
-            { key: '/menuList', label: '菜单管理', icon: <MailOutlined /> },
-            { key: '/roleList', label: '角色管理', icon: <SolutionOutlined /> },
-            { key: '/deptList', label: '部门管理', icon: <LaptopOutlined /> },
-        ],
-    },
-];
+const iconMap={
+    HomeOutlined,
+    MailOutlined,
+    UsergroupDeleteOutlined,
+    UserOutlined,
+    SolutionOutlined,
+    LaptopOutlined,
+}
+const getIcon=(iconName:string)=>{
+    const IconComponent=iconMap[iconName]
+    return IconComponent ? <IconComponent /> : null;
+}
+
 
 const SiderMenu = () => {
     // const [theme, setTheme] = useState<MenuTheme>('dark');
@@ -38,13 +34,40 @@ const SiderMenu = () => {
     // const changeTheme = (value: boolean) => {
     //     setTheme(value ? 'dark' : 'light');
     // };
+    const [menuList, setMenuList] = useState<MenuItem[]>([])
+    const data=useRouteLoaderData('layout')
     const {  collapsed, isDark } = useStore();
     const navigate = useNavigate();
     const onClick: MenuProps['onClick'] = ({ key }: { key: string }) => {
-        console.log('click ', key);
         setCurrent(key);
         navigate(key);
     };
+    const getItem=(label:string,key:string,icon:any,children?:MenuItem[])=>{
+        const myicon=getIcon(icon)
+        return {
+            label,
+            key,
+            myicon,
+            children
+        }
+    }
+    const getTreeMenu = (menuList: IMenu[],treeList:MenuItem[]=[]) => {
+        console.log('menuList',menuList);
+        
+        menuList.forEach((item) => {
+            if(item.menuType===1 && item.menuState===1){
+                if(item.buttons){
+                    return treeList.push(getItem(item.menuName,item.path,item.icon)) 
+                }
+                treeList.push(getItem(item.menuName,item.path,item.icon,getTreeMenu(item.children||[],[] ))) 
+            }
+        });
+        return treeList
+    };
+    useEffect(() => {
+       const treeMenu=getTreeMenu(data.menuList) 
+       setMenuList(treeMenu)
+    },[])
     return (
         <div className={styles.navSide}>
             <div className={styles.logo}>
@@ -58,7 +81,7 @@ const SiderMenu = () => {
                 defaultOpenKeys={['sub1']}
                 selectedKeys={[current]}
                 mode="inline"
-                items={items}
+                items={menuList}
                 style={{
                     height: '100%',
                     backgroundColor: 'var(--dark-home-bg-color)',

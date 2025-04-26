@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import { Outlet } from 'react-router';
+import { Navigate, Outlet, useLocation, useRouteLoaderData } from 'react-router';
 import styles from './index.module.less';
-import { Layout } from 'antd';
+import { Layout, Watermark } from 'antd';
 const { Sider, Footer,Content } = Layout;
 import NavHeader from './header/index';
 import SiderMenu from './menu/index';
 import { useStore } from '../store/index';
 import api from '../api';
+import { searchRoute } from '../utils';
+import {router} from '../router';
 const LayoutContainer: React.FC = () => {
     const { collapsed, updateUserInfo } = useStore();
 
@@ -16,14 +18,28 @@ const LayoutContainer: React.FC = () => {
     }, []);
     const getUserInfo = async () => {
         const data = await api.getUserInfo();
-        updateUserInfo(data);
+        updateUserInfo(data); 
     };
-    // 权限判断
+    // 权限判断 
+    const {menuPathList}=useRouteLoaderData('layout')
+    const {pathname}=useLocation()
+    const staticPathList=['/login','/404','/403','/welcome']
+    const route=searchRoute(pathname,router)
+    console.log('route',route);
+    if(route?.meta?.requireAuth && !localStorage.getItem('token')){
+        return <Navigate to="/login" />
+    }
+    
+    if(!menuPathList.includes(pathname) && !staticPathList.includes(pathname)){
+        return <Navigate to="/403" />
+    }
     return (
-        <Layout style={{height:'100vh'}}>
+        
+        <Layout style={{height:'100vh',width:'100vw'}}>
             <Sider collapsed={collapsed} style={{height:'100vh'}}>
                 <SiderMenu />
             </Sider>
+            <Watermark content="bai1276">
             <Layout>
                 <NavHeader />
                 <Content className={styles.content}>
@@ -38,7 +54,9 @@ const LayoutContainer: React.FC = () => {
                     </div>
                 </Footer>
             </Layout>
+            </Watermark>
         </Layout>
+        
     );
 };
 export default LayoutContainer;

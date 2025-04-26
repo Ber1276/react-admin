@@ -10,10 +10,13 @@ import MenuList from "../views/menu";
 import DeptList from "../views/dept";
 import Error404 from "../views/404";
 import Error403 from "../views/403";
+import authLoader from "./authloader";
 
-const router = createBrowserRouter([
+export const router = [
     {
         element: <LayoutCon />,
+        id: 'layout', 
+        loader: authLoader,
         children: [
             {
                 path: '/welcome',
@@ -38,6 +41,9 @@ const router = createBrowserRouter([
             {
                 path: '/deptList',
                 element: <DeptList />,
+                meta: {
+                    requireAuth: true, // 表示需要登录才能访问
+                }
             },
         ],
     },
@@ -58,5 +64,5 @@ const router = createBrowserRouter([
         path: '/403',
         element: <Error403 />,
     },
-])
-export default router
+]
+export default createBrowserRouter(router)

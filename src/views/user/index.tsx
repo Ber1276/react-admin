@@ -5,6 +5,7 @@ import api from '../../api/index';
 import { formatDateToChinese } from '../../utils/index';
 import CreateUser from './CreateUser';
 import { useAntdTable } from 'ahooks';
+import AuthButton from '../../components/AuthButton';
 import { IUser, IUserSearchParams } from '../../types/api';
 // import AuthButton from '@/components/AuthButton';
 // import SearchForm from '@/components/SearchForm';
@@ -139,12 +140,12 @@ export default function UserList() {
             render(record: IUser) {
                 return (
                     <Space>
-                        <Button type="text" onClick={() => handleEdit(record)}>
+                        <AuthButton auth="user@edit" type="text" onClick={() => handleEdit(record)}>
                             编辑
-                        </Button>
-                        <Button type="text" danger onClick={() => handleDel(record.userId)}>
+                        </AuthButton>
+                        <AuthButton auth="user@delete" type="text" danger onClick={() => handleDel(record.userId)}>
                             删除
-                        </Button>
+                        </AuthButton>
                     </Space>
                 );
             },
@@ -169,9 +170,9 @@ export default function UserList() {
                 </Form.Item>
                 <Form.Item>
                     <Space>
-                        <Button type="primary" onClick={search.submit}>
+                        <AuthButton auth="user@query" type="primary" onClick={search.submit}>
                             搜索
-                        </Button>
+                        </AuthButton>
                         <Button type="default" onClick={search.reset}>
                             重置
                         </Button>
@@ -182,12 +183,10 @@ export default function UserList() {
                 <div className="header">
                     <div className="title">用户列表</div>
                     <div className="action">
-                        <Button type="primary" onClick={handleCreate}>
-                            新增
-                        </Button>
-                        <Button type="primary" danger onClick={handlePatchConfirm}>
+                        <AuthButton auth="user@create"type="primary" onClick={handleCreate}>新增</AuthButton>
+                        <AuthButton auth="user@delete" type="primary" danger onClick={handlePatchConfirm}>
                             批量删除
-                        </Button>
+                        </AuthButton>
                     </div>
                 </div>
                 <Table

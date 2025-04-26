@@ -4,6 +4,7 @@ import type { MenuProps } from 'antd';
 import storage from '../../utils/storage';
 import styles from './index.module.less';
 import { useStore } from '../../store/index';
+import BreadCrumb from './BreadCrumb';
 const NavHeader = () => {
     const { userInfo, collapsed, isDark, updateCollapsed, updateTheme } = useStore();
     // 控制菜单图标关闭和展开
@@ -46,6 +47,7 @@ const NavHeader = () => {
                     {collapsed ? <MenuUnfoldOutlined rev={undefined} /> : <MenuFoldOutlined rev={undefined} />}
                 </div>
             </div>
+            <BreadCrumb></BreadCrumb>
             <div className="right">
                 <Switch
                     checked={isDark}
